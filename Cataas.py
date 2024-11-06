@@ -16,10 +16,13 @@ def load_image(url):
         return None
 
 def open_new_window():
-    img = load_image(url)
+    tag = tag_entry.get()
+    url_tag = f'https://cataas.com/cat/{tag}' if tag else 'https://cataas.com/cat'
+    img = load_image(url_tag)
+
     if img:
         new_window = Toplevel()
-        new_window.title('Карттинка с котиком')
+        new_window.title('Картинка с котиком')
         new_window.geometry('600x480')
         label = Label(new_window, image=img)
         label.pack()
@@ -32,6 +35,12 @@ window = Tk()
 window.title('Cats!')
 window.geometry('600x520')
 
+tag_entry = Entry()
+tag_entry.pack()
+
+load_button = Button(text='Загрузить по тегу', command=open_new_window)
+load_button.pack()
+
 main_bar = Menu(window)
 window.config(menu=main_bar)
 
@@ -43,7 +52,5 @@ file_menu.add_separator()
 file_menu.add_command(label='Выйти', command=exit_win)
 
 url = 'https://cataas.com/cat'
-
-open_new_window()
 
 window.mainloop()
